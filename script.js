@@ -20,6 +20,47 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         updateNav();
         window.addEventListener('scroll', updateNav, { passive: true });
+        
+        // Mobile Menu Toggle
+        const menuToggle = document.createElement('button');
+        menuToggle.className = 'menu-toggle';
+        menuToggle.setAttribute('aria-label', 'Toggle Navigation');
+        menuToggle.innerHTML = '<span></span><span></span><span></span>';
+        
+        const navContainer = nav.querySelector('.nav-container');
+        const navLinks = nav.querySelector('.nav-links');
+        const navCtaBtn = nav.querySelector('.nav-cta-btn');
+        
+        // Create a wrapper for mobile controls to group button and toggle neatly
+        const mobileControls = document.createElement('div');
+        mobileControls.className = 'nav-mobile-controls';
+        
+        // Place CTA and toggle inside the controls wrapper
+        navContainer.insertBefore(mobileControls, navCtaBtn);
+        mobileControls.appendChild(navCtaBtn);
+        mobileControls.appendChild(menuToggle);
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            
+            // If menu is transparent and we open it at top, make it opaque
+            if (navLinks.classList.contains('active') && window.scrollY <= 60) {
+                nav.classList.remove('nav-transparent');
+                nav.classList.add('nav-scrolled');
+            } else if (!navLinks.classList.contains('active') && window.scrollY <= 60) {
+                nav.classList.add('nav-transparent');
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+        
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
     }
 
     // ── SCROLL REVEAL ────────────────────────────────────────────────

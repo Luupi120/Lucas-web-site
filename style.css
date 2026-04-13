@@ -1195,7 +1195,7 @@ footer {
 
 /* Responsive Media Queries */
 @media (max-width: 900px) {
-    .nav-links { display: none; }
+    .about-container { flex-direction: column; }
     .about-container { flex-direction: column; }
     .testimonials-grid, .methodology-grid { grid-template-columns: 1fr; }
     .hero-content h1 { font-size: 2.5rem; }
@@ -1775,6 +1775,128 @@ footer {
 }
 .cta-dark h2 { color: white; font-family: var(--font-heading); font-size: clamp(2.5rem,5vw,4rem); margin-bottom: 20px; }
 .cta-dark p { color: rgba(255,255,255,0.6); max-width:520px; margin: 0 auto 40px; }
+
+/* ================================================================
+   RESPONSIVE GRID SYSTEM (Replaces Inline Styles)
+================================================================ */
+.rs-grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
+.rs-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+.rs-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
+.rs-grid-auto-about { display: grid; grid-template-columns: 45% 55%; }
+.rs-grid-services-feat { display: grid; grid-template-columns: 1.5fr 1fr 1fr; }
+.rs-grid-services-list { display: grid; grid-template-columns: 1.2fr 1fr; }
+.rs-grid-testimonials { display: grid; grid-template-columns: 1fr 1.4fr; }
+.rs-flex-wrap { display: flex; flex-wrap: wrap; }
+
+/* Mobile Menu Hamburger Button */
+.nav-mobile-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1001;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--bg-light);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+#main-nav.nav-scrolled .menu-toggle span,
+#main-nav:not(.nav-transparent) .menu-toggle span {
+    background-color: var(--primary-color);
+}
+.menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.menu-toggle.active span:nth-child(2) { opacity: 0; }
+.menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* ================================================================
+   100% RESPONSIVE REFRESH & MOBILE MENU
+================================================================ */
+body { max-width: 100%; overflow-x: hidden; }
+
+@media (max-width: 900px) {
+    /* Responsive Grid System Override */
+    .rs-grid-2, .rs-grid-3, .rs-grid-4, .rs-grid-auto-about, 
+    .rs-grid-services-feat, .rs-grid-services-list, .rs-grid-testimonials {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+    
+    /* Ensure flex wraps if needed */
+    .rs-flex-wrap-mobile { flex-wrap: wrap !important; }
+
+    /* Mobile Navigation Drawer */
+    .menu-toggle { display: flex !important; margin-left: 10px; }
+    
+    .nav-links {
+        display: flex !important; /* overrides any other styles */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-color);
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 0;
+        gap: 25px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        transform: translateY(-150%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease-in-out;
+        z-index: 999;
+    }
+    
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #main-nav.nav-scrolled .nav-links {
+        background-color: rgba(255,255,255,0.98);
+    }
+    #main-nav.nav-scrolled .nav-links a { color: var(--primary-color); }
+    
+    /* Formatting tweaks for mobile */
+    .hero-v2-content { padding-top: 130px; }
+    .hero-v2-headline { font-size: 3rem !important; }
+    .nav-container { padding: 20px 24px; }
+    
+    /* Hide some visual orbs that might overflow */
+    .dark-orb { display: none; }
+    
+    /* Adjust metrics strip to flex layout to wrap nicely */
+    .hero-metrics-strip { flex-wrap: wrap; justify-content: center; }
+    .metric-divider { display: none; }
+
+    /* Make sure stat cards scale down */
+    .stat-card-container { flex-direction: column; gap: 20px; }
+    .svc-card-dark { padding: 24px; }
+    .editorial-quote-block { padding-left: 20px; }
+    .cta-dark, .cta-section-v2 { padding: 60px 20px; }
+}
+
+@media (max-width: 600px) {
+    .editorial-content h2 { font-size: 2.2rem; }
+    .metric-num { font-size: 1.8rem; }
+    .hero-v2-headline { font-size: 2.6rem !important; }
+    .nav-links { padding: 25px 0; gap: 15px; }
+}
 
 
 
